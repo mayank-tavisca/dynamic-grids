@@ -1,34 +1,14 @@
 import React, { FC, useEffect, useState } from "react";
 import Style from "./dynamicGrid.module.scss";
-import { sortDataByAscending, sortDataByDescending } from "../shared/utils";
+import {
+  sortDataByAscending,
+  sortDataByDescending,
+  ITableConfig,
+  SortOrder
+} from "../shared/utils";
 
 interface IProps {
   data: any;
-}
-
-enum PaginationLocation {
-  TOP,
-  BOTTOM
-}
-
-enum SortOrder {
-  ASCENDING,
-  DESCENDING
-}
-
-interface IPagination {
-  showPagination: boolean;
-  defaultRowsCount: number;
-  activePane: number;
-  position: PaginationLocation;
-}
-
-interface ITableConfig {
-  rows: number;
-  cols: number;
-  defaultRowCount: number;
-  pagination: boolean;
-  sortingEnabled: boolean;
 }
 
 const DynamicGrid: React.FC<IProps> = ({ data }) => {

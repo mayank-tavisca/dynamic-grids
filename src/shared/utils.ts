@@ -23,3 +23,28 @@ export const sortDataByDescending = (data: any[], sortCriteria: string) => {
     });
     return data;
 }
+
+export enum PaginationLocation {
+    TOP,
+    BOTTOM
+}
+
+export enum SortOrder {
+    ASCENDING,
+    DESCENDING
+}
+
+export interface IPagination {
+    showPagination: boolean;
+    defaultRowsCount: number;
+    activePane: number;
+    position: PaginationLocation;
+}
+
+export interface ITableConfig {
+    rows: number;
+    cols: number;
+    defaultRowCount: number;
+    pagination: boolean;
+    sortingEnabled: boolean;
+}

@@ -41,7 +41,7 @@ const Data1 = {
   sortingEnabled: true,
   sorting: {
     defaultOrder: "ascending",
-    sortBy: "gender"
+    sortBy: "email"
   }
 };
 

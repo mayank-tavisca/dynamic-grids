@@ -38,11 +38,8 @@ const Data1 = {
   ],
   styles: {},
   pagination: {},
-  sortingEnabled: true,
-  sorting: {
-    defaultOrder: "ascending",
-    sortBy: "gender"
-  }
+  sortingEnabled: false,
+  sorting: {}
 };
 
 const App = () => {

@@ -1,0 +1,28 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+
+  .tableRow {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #333;
+
+    .tableCell {
+      border-right: 1px solid #333;
+      flex: 1 0 0;
+      padding: 10px 24px;
+    }
+
+    .tableCell:last-child {
+      border-right: none;
+    }
+
+    .tableHeader {
+      font-weight: bold;
+    }
+  }
+  .tableRow:last-child {
+    border-bottom: none;
+  }
+}

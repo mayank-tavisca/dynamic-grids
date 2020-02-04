@@ -38,17 +38,43 @@ const Data1 = {
   ],
   styles: {},
   pagination: {},
-  sortingEnabled: true,
-  sorting: {
-    defaultOrder: "ascending",
-    sortBy: "gender"
-  }
+  sorting: {}
+};
+
+const Data2 = {
+  headers: [
+    { label: "User Names", value: "username" },
+    { label: "Emails", value: "email" }
+  ],
+  tableData: [
+    {
+      username: "U1",
+      email: "4test1@test.com"
+    },
+    {
+      username: "U2",
+      email: "3test2@test.com"
+    },
+    {
+      username: "U3",
+      email: "1test3@test.com"
+    },
+    {
+      username: "U4",
+      email: "2test4@test.com"
+    }
+  ],
+  styles: {},
+  pagination: {},
+  sorting: {}
 };
 
 const App = () => {
   return (
     <div className="App">
       <DynamicGrid data={Data1} />
+      <br />
+      <DynamicGrid data={Data2} />
     </div>
   );
 };

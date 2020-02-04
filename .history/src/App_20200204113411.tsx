@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import DynamicGrid from "./dynamic-grid/dynamicGrid";
 
-const Data1 = {
+const Data = {
   headers: [
     { label: "User Names", value: "username" },
     { label: "Emails", value: "email" },
@@ -38,17 +38,13 @@ const Data1 = {
   ],
   styles: {},
   pagination: {},
-  sortingEnabled: true,
-  sorting: {
-    defaultOrder: "ascending",
-    sortBy: "gender"
-  }
+  sorting: {}
 };
 
 const App = () => {
   return (
     <div className="App">
-      <DynamicGrid data={Data1} />
+      <DynamicGrid data={Data} />
     </div>
   );
 };

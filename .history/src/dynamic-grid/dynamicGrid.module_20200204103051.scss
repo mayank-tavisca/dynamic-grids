@@ -1,0 +1,20 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #333;
+
+  .tableRow {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #333;
+
+    .tableCell {
+      flex: 1 0 0;
+      padding: 10px 24px;
+    }
+
+    .tableHeader {
+      font-weight: bold;
+    }
+  }
+}

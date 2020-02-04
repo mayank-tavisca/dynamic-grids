@@ -42,7 +42,7 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
 
   const [tableData, setTableData]: any = useState([]);
   const [headers, setHeaders] = useState([]);
-  const [sortOrder, setSortOrder] = useState();
+  const [sortOrder, setSortOrder] = useState(SortOrder.ASCENDING);
   const [currentSortCriteria, setCurrentSortCriteria] = useState("");
   //   let tableConfig: ITableConfig = ;
 
@@ -95,9 +95,9 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
               {tableConfig.sortingEnabled &&
               currentSortCriteria === item.value ? (
                 sortOrder === SortOrder.ASCENDING ? (
-                  <span>&#8595;</span>
-                ) : (
                   <span>&#8593;</span>
+                ) : (
+                  <span>&#8595;</span>
                 )
               ) : (
                 ""

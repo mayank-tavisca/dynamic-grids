@@ -35,7 +35,6 @@ export enum SortOrder {
 }
 
 export interface IPagination {
-    showPagination: boolean;
     defaultRowsCount: number;
     activePane: number;
     position: PaginationLocation;
@@ -44,7 +43,6 @@ export interface IPagination {
 export interface ITableConfig {
     rows: number;
     cols: number;
-    defaultRowCount: number;
-    pagination: boolean;
+    paginationEnabled: boolean;
     sortingEnabled: boolean;
 }

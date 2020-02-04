@@ -4,7 +4,9 @@ import {
   sortDataByAscending,
   sortDataByDescending,
   ITableConfig,
-  SortOrder
+  SortOrder,
+  IPagination,
+  PaginationLocation
 } from "../shared/utils";
 
 interface IProps {
@@ -12,19 +14,23 @@ interface IProps {
 }
 
 const DynamicGrid: React.FC<IProps> = ({ data }) => {
-  const [tableConfig, setTableConfig] = useState<ITableConfig>({
+  const [config, setConfig] = useState<ITableConfig>({
     rows: 0,
     cols: 0,
-    defaultRowCount: 5,
-    pagination: false,
+    paginationEnabled: false,
     sortingEnabled: false
   });
 
+  const [paginationConfig, setPaginationConfig] = useState<IPagination>({
+    defaultRowsCount: 3,
+    activePane: 1,
+    position: PaginationLocation.BOTTOM
+  });
   const [tableData, setTableData]: any = useState([]);
   const [headers, setHeaders] = useState([]);
   const [sortOrder, setSortOrder] = useState(SortOrder.ASCENDING);
   const [currentSortCriteria, setCurrentSortCriteria] = useState("");
-  //   let tableConfig: ITableConfig = ;
+  const [thresholdIndex, setThresholdIndex]: any = useState({});
 
   useEffect(() => {
     parseData();
@@ -36,15 +42,15 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
   }, [currentSortCriteria]);
 
   const parseData = () => {
-    tableConfig.rows = data.tableData.length;
-    tableConfig.cols = Object.keys(data.tableData).length;
-    tableConfig.sortingEnabled = data.sortingEnabled;
-
+    config.rows = data.tableData.length;
+    config.cols = Object.keys(data.tableData).length;
+    config.sortingEnabled = data.sortingEnabled;
+    config.paginationEnabled = data.paginationEnabled;
     setHeaders(data.headers);
     setTableData(data.tableData);
-    setTableConfig(tableConfig);
+    setConfig(config);
 
-    if (tableConfig.sortingEnabled) {
+    if (config.sortingEnabled) {
       console.log(data.sorting.defaultOrder.toLowerCase());
 
       const defaultOrder =
@@ -53,6 +59,9 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
           : SortOrder.DESCENDING;
       setSortOrder(defaultOrder);
       setCurrentSortCriteria(data.sorting.sortBy);
+    }
+    if (config.paginationEnabled) {
+      setThresholdIndex({ start: 0, end: paginationConfig.defaultRowsCount });
     }
   };
 
@@ -63,7 +72,7 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
           return (
             <span
               onClick={
-                tableConfig.sortingEnabled
+                config.sortingEnabled
                   ? () => {
                       sortTable(item.value);
                     }
@@ -72,8 +81,7 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
               className={`${Style.tableCell} ${Style.tableHeader}`}
             >
               {item.label}
-              {tableConfig.sortingEnabled &&
-              currentSortCriteria === item.value ? (
+              {config.sortingEnabled && currentSortCriteria === item.value ? (
                 sortOrder === SortOrder.ASCENDING ? (
                   <span>&#8593;</span>
                 ) : (
@@ -96,8 +104,15 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
   };
 
   const renderData = () => {
-    return tableData.map((item: any) => {
-      return <div className={Style.tableRow}>{renderRow(item)}</div>;
+    return tableData.map((item: any, index: number) => {
+      if (
+        config.paginationEnabled &&
+        (index < thresholdIndex.start || index + 1 > thresholdIndex.end)
+      ) {
+        return;
+      } else {
+        return <div className={Style.tableRow}>{renderRow(item)}</div>;
+      }
     });
   };
 
@@ -128,12 +143,45 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
     }
   };
 
+  const renderPagination = () => {
+    const totalRows = tableData.length;
+    const totalPages = Math.ceil(totalRows / paginationConfig.defaultRowsCount);
+
+    return (
+      <div className={Style.paginatioContainer}>
+        <span className={Style.paginationLink}>Prev</span>
+        {Array.from(Array(totalPages).keys()).map((i: any) => {
+          return (
+            <span
+              onClick={() => toggleToPage(i + 1)}
+              className={Style.paginationLink}
+            >
+              {i + 1}
+            </span>
+          );
+        })}
+        <span className={Style.paginationLink}>Next</span>
+      </div>
+    );
+  };
+
+  const toggleToPage = (pageNumber: number) => {
+    console.log(pageNumber);
+    console.log(paginationConfig.defaultRowsCount);
+    setThresholdIndex({
+      start: (pageNumber - 1) * paginationConfig.defaultRowsCount,
+      end: pageNumber * paginationConfig.defaultRowsCount
+    });
+    console.log(thresholdIndex);
+  };
+
   return (
     <div>
       <div className={Style.table}>
         {renderHeader()}
         {renderData()}
       </div>
+      {config.paginationEnabled ? renderPagination() : ""}
     </div>
   );
 };

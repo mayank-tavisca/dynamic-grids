@@ -34,14 +34,33 @@ const Data1 = {
       email: "2test4@test.com",
       number: 9123445566,
       gender: "F"
+    },
+    {
+      username: "U5",
+      email: "3test2@test.com",
+      number: 3123445566,
+      gender: "F"
+    },
+    {
+      username: "U6",
+      email: "1test3@test.com",
+      number: 2123445566,
+      gender: "M"
+    },
+    {
+      username: "U7",
+      email: "2test4@test.com",
+      number: 9123445566,
+      gender: "F"
     }
   ],
   styles: {},
+  paginationEnabled: true,
   pagination: {},
   sortingEnabled: true,
   sorting: {
     defaultOrder: "ascending",
-    sortBy: "gender"
+    sortBy: "username"
   }
 };
 

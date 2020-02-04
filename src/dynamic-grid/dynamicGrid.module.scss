@@ -27,3 +27,13 @@
     border-bottom: none;
   }
 }
+.paginatioContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0;
+  .paginationLink {
+    cursor: pointer;
+    padding: 8px;
+    color: blue;
+  }
+}

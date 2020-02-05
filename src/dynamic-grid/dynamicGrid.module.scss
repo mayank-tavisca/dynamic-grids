@@ -21,6 +21,11 @@
 
     .tableHeader {
       font-weight: bold;
+      display: flex;
+      justify-content: center;
+      .sortIcon {
+        padding-left: 4px;
+      }
     }
   }
   .tableRow:last-child {

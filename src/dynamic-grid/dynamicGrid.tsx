@@ -70,7 +70,7 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
       <div className={Style.tableRow}>
         {headers.map((item: any) => {
           return (
-            <span
+            <div
               onClick={
                 config.sortingEnabled
                   ? () => {
@@ -83,14 +83,14 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
               {item.label}
               {config.sortingEnabled && currentSortCriteria === item.value ? (
                 sortOrder === SortOrder.ASCENDING ? (
-                  <span>&#8593;</span>
+                  <div className={Style.sortIcon}>&#8593;</div>
                 ) : (
-                  <span>&#8595;</span>
+                  <div className={Style.sortIcon}>&#8595;</div>
                 )
               ) : (
                 ""
               )}
-            </span>
+            </div>
           );
         })}
       </div>
@@ -99,7 +99,7 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
 
   const renderRow = (data: any) => {
     return Object.keys(data).map(key => {
-      return <span className={`${Style.tableCell}`}>{data[key]}</span>;
+      return <div className={`${Style.tableCell}`}>{data[key]}</div>;
     });
   };
 
@@ -149,18 +149,18 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
 
     return (
       <div className={Style.paginatioContainer}>
-        <span className={Style.paginationLink}>Prev</span>
+        <div className={Style.paginationLink}>Prev</div>
         {Array.from(Array(totalPages).keys()).map((i: any) => {
           return (
-            <span
+            <div
               onClick={() => toggleToPage(i + 1)}
               className={Style.paginationLink}
             >
               {i + 1}
-            </span>
+            </div>
           );
         })}
-        <span className={Style.paginationLink}>Next</span>
+        <div className={Style.paginationLink}>Next</div>
       </div>
     );
   };

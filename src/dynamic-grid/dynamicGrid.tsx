@@ -7,7 +7,7 @@ import {
   SortOrder,
   IPagination,
   PaginationLocation
-} from "../shared/utils";
+} from "./utils";
 
 interface IProps {
   data: any;

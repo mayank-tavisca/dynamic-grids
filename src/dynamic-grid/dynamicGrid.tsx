@@ -6,11 +6,13 @@ import {
   ITableConfig,
   SortOrder,
   IPagination,
-  PaginationLocation
+  PaginationLocation,
+  IConfig,
+  IHeader
 } from "./utils";
 
 interface IProps {
-  data: any;
+  data: IConfig;
 }
 
 const DynamicGrid: React.FC<IProps> = ({ data }) => {
@@ -22,12 +24,10 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
   });
 
   const [paginationConfig, setPaginationConfig] = useState<IPagination>({
-    defaultRowsCount: 3,
-    activePane: 1,
-    position: PaginationLocation.BOTTOM
+    defaultRowsCount: 5
   });
   const [tableData, setTableData]: any = useState([]);
-  const [headers, setHeaders] = useState([]);
+  const [headers, setHeaders] = useState<IHeader[]>([]);
   const [sortOrder, setSortOrder] = useState(SortOrder.ASCENDING);
   const [currentSortCriteria, setCurrentSortCriteria] = useState("");
   const [thresholdIndex, setThresholdIndex]: any = useState({});
@@ -42,27 +42,32 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
   }, [currentSortCriteria]);
 
   const parseData = () => {
-    config.rows = data.tableData.length;
-    config.cols = Object.keys(data.tableData).length;
-    config.sortingEnabled = data.sortingEnabled;
-    config.paginationEnabled = data.paginationEnabled;
-    setHeaders(data.headers);
-    setTableData(data.tableData);
-    setConfig(config);
+    let t: any = {};
+    t.rows = data.tableData.length;
+    t.cols = Object.keys(data.tableData).length;
+    t.sortingEnabled = data.sortingEnabled;
+    t.paginationEnabled = data.paginationEnabled;
 
-    if (config.sortingEnabled) {
-      console.log(data.sorting.defaultOrder.toLowerCase());
+    if (data.pagination && data.pagination.defaultRowsCount) {
+      setPaginationConfig({
+        defaultRowsCount: data.pagination.defaultRowsCount
+      });
+      setThresholdIndex({ start: 0, end: paginationConfig.defaultRowsCount });
+    }
 
+    if (data.sortingEnabled && data.sorting) {
       const defaultOrder =
-        data.sorting.defaultOrder.toLowerCase() === "ascending"
+        data.sorting?.defaultOrder.toLowerCase() === "ascending"
           ? SortOrder.ASCENDING
           : SortOrder.DESCENDING;
       setSortOrder(defaultOrder);
       setCurrentSortCriteria(data.sorting.sortBy);
+      sortTable(currentSortCriteria);
     }
-    if (config.paginationEnabled) {
-      setThresholdIndex({ start: 0, end: paginationConfig.defaultRowsCount });
-    }
+
+    setHeaders(data.headers);
+    setTableData(data.tableData);
+    setConfig(t);
   };
 
   const renderHeader = () => {
@@ -149,7 +154,6 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
 
     return (
       <div className={Style.paginatioContainer}>
-        <div className={Style.paginationLink}>Prev</div>
         {Array.from(Array(totalPages).keys()).map((i: any) => {
           return (
             <div
@@ -160,19 +164,15 @@ const DynamicGrid: React.FC<IProps> = ({ data }) => {
             </div>
           );
         })}
-        <div className={Style.paginationLink}>Next</div>
       </div>
     );
   };
 
   const toggleToPage = (pageNumber: number) => {
-    console.log(pageNumber);
-    console.log(paginationConfig.defaultRowsCount);
     setThresholdIndex({
       start: (pageNumber - 1) * paginationConfig.defaultRowsCount,
       end: pageNumber * paginationConfig.defaultRowsCount
     });
-    console.log(thresholdIndex);
   };
 
   return (

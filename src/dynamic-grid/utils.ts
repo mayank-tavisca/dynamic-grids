@@ -36,8 +36,11 @@ export enum SortOrder {
 
 export interface IPagination {
     defaultRowsCount: number;
-    activePane: number;
-    position: PaginationLocation;
+}
+
+export interface ISorting {
+    defaultOrder: string;
+    sortBy: string;
 }
 
 export interface ITableConfig {
@@ -45,4 +48,19 @@ export interface ITableConfig {
     cols: number;
     paginationEnabled: boolean;
     sortingEnabled: boolean;
+}
+
+export interface IHeader {
+    label: string;
+    value: string;
+}
+
+
+export interface IConfig {
+    headers: IHeader[];
+    tableData: any[];
+    paginationEnabled?: boolean;
+    pagination?: IPagination;
+    sortingEnabled?: boolean;
+    sorting?: ISorting;
 }

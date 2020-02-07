@@ -2,8 +2,9 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import DynamicGrid from "./dynamic-grid/dynamicGrid";
+import { IConfig } from "./dynamic-grid/utils";
 
-const Data1 = {
+const Data1: IConfig = {
   headers: [
     { label: "User Names", value: "username" },
     { label: "Emails", value: "email" },
@@ -54,9 +55,10 @@ const Data1 = {
       gender: "F"
     }
   ],
-  styles: {},
   paginationEnabled: true,
-  pagination: {},
+  pagination: {
+    defaultRowsCount: 5
+  },
   sortingEnabled: true,
   sorting: {
     defaultOrder: "ascending",
